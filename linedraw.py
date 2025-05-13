@@ -27,6 +27,33 @@ except:
 
 # -------------- output functions --------------
 
+def image_to_json_with_noise(
+    image_filename,
+    resolution=1024,
+    draw_contours=False,
+    repeat_contours=1,
+    draw_hatch=False,
+    repeat_hatch=1,
+):
+    lines = vectorise(
+        image_filename,
+        resolution,
+        draw_contours,
+        repeat_contours,
+        draw_hatch,
+        repeat_hatch,
+    )
+
+    out_lines = []
+
+    for line in lines:
+        new_line = []
+        for pos in line:
+            new_line.append((pos[0] + randint(-48,72), pos[1]))
+        out_lines.append(new_line)
+
+    filename = json_folder + image_filename + ".json"
+    lines_to_file(out_lines, filename)
 
 def image_to_json(
     image_filename,
